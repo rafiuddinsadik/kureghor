@@ -15,10 +15,9 @@ class CategoryController extends Controller
     }
 
     public function add(Request $request){
-        Category::insert([
+        Category::create([
             'title'=> $request->title,
             'slug'=>$request->slug,
-            'created_at' => now()
         ]);
 
         return redirect()->back();

@@ -18,7 +18,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email', 'password', 'user_role'
+        'name', 'email', 'password', 'user_role', 'is_active'
     ];
 
     /**
@@ -47,5 +47,9 @@ class User extends Authenticatable
     public function isUser()
     {
         return !! ($this->user_role == 2);
+    }
+    public function isPublisher()
+    {
+        return !! ($this->user_role == 3);
     }
 }
