@@ -34,4 +34,11 @@ Route::group([
     Route::get('cateogories/modify/{slug}', 'CategoryController@modify')->name('admin.categories.modify');
     Route::post('cateogories/update/{slug}', 'CategoryController@update')->name('admin.categories.update');
     Route::get('cateogories/delete/{slug}', 'CategoryController@delete')->name('admin.categories.delete');
+
+    //authors
+    Route::get('authors','AuthorController@index')->name('admin.authors');
+    Route::post('authors/add','AuthorController@add')->name('admin.authors.add');
+    Route::get('authors/modify/{slug}', 'AuthorController@modify')->name('admin.authors.modify');
+    Route::post('authors/update/{slug}', 'AuthorController@update')->name('admin.authors.update');
+    Route::get('authors/delete/{slug}', 'AuthorController@delete')->name('admin.authors.delete');
 });
