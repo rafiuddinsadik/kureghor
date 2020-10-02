@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="jumbotron" style="text-align: center">
-        <h1>Author List</h1>
+        <h1>Translator List</h1>
         <br>
         <!-- Button trigger modal -->
         <a type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
@@ -14,13 +14,13 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Create a new author!</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Create a new translator!</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{route('admin.authors.add')}}">
+                        <form method="POST" action="{{route('admin.translators.add')}}">
                             @csrf
                             <div class="form-group">
                                 <label>Name</label>
@@ -59,16 +59,16 @@
             </tr>
             </thead>
             <tbody>
-            @if(count($authors) && !empty($authors))
-                @foreach($authors as $author)
+            @if(count($translators) && !empty($translators))
+                @foreach($translators as $translator)
                     <tr>
                         <th scope="row">{{$loop->iteration}}</th>
-                        <td>{{$author->name}}</td>
-                        <td>{{$author->slug}}</td>
+                        <td>{{$translator->name}}</td>
+                        <td>{{$translator->slug}}</td>
                         <td>0</td>
-                        <td>{{$author->created_at->diffForHumans()}}</td>
-                        <td><a href="{{route('admin.authors.modify', $author->slug)}}" class="btn btn-warning">Update</a></td>
-                        <td><a href="{{route('admin.authors.delete', $author->slug)}}" class="btn btn-danger">Delete</a></td>
+                        <td>{{$translator->created_at->diffForHumans()}}</td>
+                        <td><a href="{{route('admin.translators.modify', $translator->slug)}}" class="btn btn-warning">Update</a></td>
+                        <td><a href="{{route('admin.translators.delete', $translator->slug)}}" class="btn btn-danger">Delete</a></td>
                     </tr>
             @endforeach
             @endif

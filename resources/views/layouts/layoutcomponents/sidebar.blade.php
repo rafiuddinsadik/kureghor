@@ -25,7 +25,7 @@
                      with font-awesome or any other icon font library -->
                 <li class="nav-header">Books</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('admin.book.list')}}" class="nav-link">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
                             List
@@ -53,6 +53,12 @@
                                 <p>Authors</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.translators')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Translators</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item has-treeview">
@@ -77,6 +83,23 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-header">Order</li>
+                <li class="nav-item">
+                    <a href="{{route('admin.index')}}" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            Orders
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.payment.method')}}" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            Payment methods
+                        </p>
+                    </a>
                 </li>
             </ul>
         </nav>

@@ -10,4 +10,7 @@ class Category extends Model
 
     protected $fillable = ['title', 'slug'];
 
+//    public function books(){
+//        return $this->belongsToMany('App\Book', 'book_categories', 'category_id', 'book_id');
+//    }
 }

@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Author;
+use App\Translator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AuthorController extends Controller
+class TranslatorController extends Controller
 {
     public function index(){
-        $authors = Author::all();
-        $compact = compact('authors');
-        return view('admin.authors.index', $compact);
+        $translators = Translator::all();
+        $compact = compact('translators');
+        return view('admin.translators.index', $compact);
     }
 
     public function add(Request $request){
-        Author::create([
+        Translator::create([
             'name'=> $request->name,
             'slug'=>$request->slug,
             'description' => $request->description
@@ -24,23 +24,23 @@ class AuthorController extends Controller
         return redirect()->back();
     }
     public function modify($slug){
-        $author = Author::where('slug', $slug)->limit(1)->get();
-        $compact = compact('author');
-        return view('admin.authors.update', $compact);
+        $translators = Translator::where('slug', $slug)->limit(1)->get();
+        $compact = compact('translators');
+        return view('admin.translators.update', $compact);
     }
     public function update(Request $request, $slug){
-        Author::where('slug', $slug)->update([
+        Translator::where('slug', $slug)->update([
             'name' => $request->name,
             'slug' => $request->slug,
             'description' => $request->description,
             'updated_at' => now()
         ]);
 
-        return redirect()->route('admin.authors');
+        return redirect()->route('admin.translators');
     }
 
     public function delete($slug){
-        Author::where('slug', $slug)->delete();
-        return redirect()->route('admin.authors');
+        Translator::where('slug', $slug)->delete();
+        return redirect()->route('admin.translators');
     }
 }

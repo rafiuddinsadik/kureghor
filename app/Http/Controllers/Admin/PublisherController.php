@@ -16,6 +16,9 @@ class PublisherController extends Controller
     }
 
     public function add(Request $request){
+        if(Publisher::where('email', '=', $request->email)->exists() || Publisher::where('slug', '=', $request->slug)->exists()){
+            return redirect()->back()->with('error', 'Restricted Duplicate Email or Slug!');
+        }
         Publisher::create([
             'title' => $request->title,
             'slug' => $request->slug,

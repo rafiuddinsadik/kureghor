@@ -2,19 +2,18 @@
 
 @section('content')
     <div class="jumbotron">
-        <h1>Author Update</h1>
+        <h1>Translator Update</h1>
         <br>
     </div>
 
     <br>
-
     <div class="container">
         <h3 class="text-center"><b>Update</b></h3>
-        <form method="POST" action="{{route('admin.authors.update', $author[0]->slug)}}">
+        <form method="POST" action="{{route('admin.translators.update', $translators[0]->slug)}}">
             @csrf
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" name="name" value="{{$author[0]->name}}">
+                <input type="text" class="form-control" name="name" value="{{$translators[0]->name}}">
             </div>
             <div class="form-group">
                 <label>Description</label>
@@ -22,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label>Slug</label>
-                <input type="text" class="form-control" name="slug" value="{{$author[0]->slug}}">
+                <input type="text" class="form-control" name="slug" value="{{$translators[0]->slug}}">
             </div>
             <button type="submit" class="btn btn-warning btn-block">Update</button>
         </form>
@@ -40,7 +39,7 @@
             toolbar_mode: 'floating',
             setup: function (editor) {
                 editor.on('init', function (e) {
-                    editor.setContent('<?php echo $author[0]->description; ?>');
+                    editor.setContent('<?php echo $translators[0]->description; ?>');
                 });
             }
         });

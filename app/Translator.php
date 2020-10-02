@@ -4,10 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Author extends Model
+class Translator extends Model
 {
-    protected $table = 'authors';
-
+    protected $table = 'translators';
     protected $fillable = ['name', 'slug', 'description'];
-
 }
