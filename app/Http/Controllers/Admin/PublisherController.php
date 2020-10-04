@@ -36,4 +36,33 @@ class PublisherController extends Controller
 
         return redirect()->route('admin.publishers');
     }
+
+    public function modify($slug){
+        $publisher = Publisher::where('slug',$slug)->get()[0];
+        return view('admin.publishers.update', compact('publisher'));
+    }
+
+    public function update($slug, Request $request){
+        Publisher::where('slug', $slug)->update([
+            'title' => $request->title,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => $request->password,
+            'is_active' => 1
+        ]);
+        User::where('email', Publisher::where('slug', $slug)->get()[0]->email)
+            ->update([
+                'name' => $request->title,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+        return redirect()->route('admin.publishers');
+    }
+
+    public function delete($id){
+        $p = Publisher::where('id', $id)->get()[0];
+        User::where('email', $p->email)->delete();
+        $p->delete();
+        return redirect()->route('admin.publishers');
+    }
 }

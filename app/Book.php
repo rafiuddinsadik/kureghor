@@ -39,4 +39,7 @@ class Book extends Model
     public function translator(){
         return $this->hasOne('App\Translator', 'id', 'translator_id');
     }
+    public function publisher(){
+        return $this->hasOne('App\Publisher', 'id', 'publisher_id');
+    }
 }

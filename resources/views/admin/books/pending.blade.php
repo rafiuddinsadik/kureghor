@@ -16,9 +16,6 @@
         <a href="{{route('admin.book.create')}}" class="btn btn-success">
             Create
         </a>
-        <a href="{{route('admin.book.pending')}}" class="btn btn-warning ml-2">
-            View Pending Books <span class="badge badge-light">{{$book_pending_count}}</span>
-        </a>
     </div>
 
     <br>
@@ -66,7 +63,7 @@
                         <td>{{$book->viewer}}</td>
                         <td>{{$book->created_at->diffForHumans()}}</td>
                         <td><a href="{{route('admin.book.modify', $book->slug)}}" class="btn btn-info">Update</a></td>
-                        <td><a href="{{route('admin.book.switch', $book->id)}}" class="btn btn-warning">Disable</a></td>
+                        <td><a href="{{route('admin.book.switch', $book->id)}}" class="btn btn-success">Enable</a></td>
                         <td><a href="{{route('admin.book.delete', $book->id)}}" onclick="return confirm('Are you sure?');" class="btn btn-danger">Delete</a></td>
                     </tr>
             @endforeach

@@ -90,8 +90,8 @@
                         <td>{{$publisher->email}}</td>
                         <td>{{$publisher->phone}}</td>
                         <td>{{$publisher->password}}</td>
-                        <td><a href="#" class="btn btn-warning">Update</a></td>
-                        <td><a href="#" class="btn btn-danger">Delete</a></td>
+                        <td><a href="{{route('admin.publishers.modify', $publisher->slug)}}" class="btn btn-warning">Update</a></td>
+                        <td><a href="{{route('admin.publishers.delete', $publisher->id)}}" onclick="return confirm('Are you sure?');" class="btn btn-danger">Delete</a></td>
                     </tr>
             @endforeach
             @endif

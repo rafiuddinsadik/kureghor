@@ -18,8 +18,14 @@ use PhpParser\Node\Expr\Array_;
 class BookController extends Controller
 {
     public function index(){
-        $books = Book::paginate(30);
-        return view('admin.books.index', compact('books'));
+        $books = Book::where('status', 1)->paginate(30);
+        $book_pending_count = Book::where('status', 2)->count();
+        return view('admin.books.index', compact('books', 'book_pending_count'));
+    }
+
+    public function pending(){
+        $books = Book::where('status', 2)->paginate(30);
+        return view('admin.books.pending', compact('books'));
     }
 
     public function create(){
@@ -117,10 +123,8 @@ class BookController extends Controller
             'language' => $request->language,
             'edition' => $request->edition,
             'page_count' => $request->numberOfPages,
-            'status' => 1,
             'image_path' => $imagePath,
             'demo_path' => $demoPath,
-            'slug' => Str::slug($request->title, '-'),
             'updated_at' => now()
         ]);
 
@@ -144,6 +148,27 @@ class BookController extends Controller
             }
         }
 
+        return redirect()->route('admin.book.list');
+    }
+
+    public function delete($id){
+        Book::where('id', $id)->delete();
+        BookCategories::where('book_id', $id)->delete();
+        BookAuthors::where('book_id', $id)->delete();
+        return redirect()->route('admin.book.list');
+    }
+
+    public function switch($id){
+        $book = Book::where('id', $id)->get()[0];
+        if($book->status == 2){
+            $book->update([
+                'status' => 1
+            ]);
+        }else{
+            $book->update([
+                'status' => 2
+            ]);
+        }
         return redirect()->route('admin.book.list');
     }
 

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.publisher')
 
 @section('content')
     @if (\Session::has('success'))
@@ -13,11 +13,8 @@
         <h1>Book List</h1>
         <br>
         <!-- Button trigger modal -->
-        <a href="{{route('admin.book.create')}}" class="btn btn-success">
+        <a href="{{route('publisher.book.create')}}" class="btn btn-success">
             Create
-        </a>
-        <a href="{{route('admin.book.pending')}}" class="btn btn-warning ml-2">
-            View Pending Books <span class="badge badge-light">{{$book_pending_count}}</span>
         </a>
     </div>
 
@@ -32,14 +29,12 @@
                 <th scope="col">Title</th>
                 <th scope="col">Author</th>
                 <th scope="col">Category</th>
-                <th scope="col">Publisher</th>
                 <th scope="col">Price</th>
                 <th scope="col">Discounted Price</th>
                 <th scope="col">Total Sell</th>
                 <th scope="col">View</th>
                 <th scope="col">Created</th>
-                <th scope="col">Update</th>
-                <th scope="col">Disable</th>
+                <th scope="col">Status</th>
                 <th scope="col">Delete</th>
             </tr>
             </thead>
@@ -55,19 +50,25 @@
                             @endforeach
                         </td>
                         <td>
-                        @foreach ($book->categories as $category)
+                            @foreach ($book->categories as $category)
                                 <span class="badge badge-pill badge-primary">{{$category->title}}</span>
-                        @endforeach
+                            @endforeach
                         </td>
-                        <td>{{$book->publisher->title}}</td>
                         <td>{{$book->price}}</td>
                         <td>{{$book->discount_price}}</td>
                         <td>{{$book->total_sell}}</td>
                         <td>{{$book->viewer}}</td>
                         <td>{{$book->created_at->diffForHumans()}}</td>
-                        <td><a href="{{route('admin.book.modify', $book->slug)}}" class="btn btn-info">Update</a></td>
-                        <td><a href="{{route('admin.book.switch', $book->id)}}" class="btn btn-warning">Disable</a></td>
-                        <td><a href="{{route('admin.book.delete', $book->id)}}" onclick="return confirm('Are you sure?');" class="btn btn-danger">Delete</a></td>
+                        @if($book->status == 2)
+                            <td><span style="color: orange; font-weight: bold">Pending</span></td>
+                        @else
+                            <td><span style="color: green; font-weight: bold">Active</span></td>
+                        @endif
+                        @if($book->status == 2)
+                            <td><a href="{{route('publisher.book.delete', $book->id)}}" onclick="return confirm('Are you sure?');" class="btn btn-danger">Delete</a></td>
+                        @else
+                            <td><a href="#" class="btn btn-danger disabled">Delete</a></td>
+                        @endif
                     </tr>
             @endforeach
             @endif
@@ -76,4 +77,5 @@
     <div class="container">
         {{ $books->links() }}
     </div>
-@endsection
+@stop
+

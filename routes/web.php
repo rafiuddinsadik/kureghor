@@ -11,26 +11,6 @@
 |
 */
 
-use App\User;
-
-Route::post('registeruser', function (\Illuminate\Http\Request $request){
-    \Illuminate\Support\Facades\DB::table('users')->insert([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => $request->password,
-    ]);
-    return redirect()->route('/');
-});
-
-Route::get('json-parse', function (\Illuminate\Http\Request $request){
-    return response()->json(['name' => 'Rafi Uddin', 'email'=>'rafiuddinsadik@gmail.com'], 200);
-});
-
-Route::get('session-test', function (\Illuminate\Http\Request $request){
-    $foo = $request->foo;
-    return view('welcome')->with([$foo]);
-});
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -42,7 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Admin routes. Just add the admin middleware to your route groups, bang! They are secured!
 Route::group([
-    'middleware' => 'guest',
+    'middleware' => 'admin',
     'prefix' => 'admin',
     'namespace' => 'Admin'
 ], function () {
@@ -51,10 +31,13 @@ Route::group([
 
     //Books
     Route::get('books/list', 'BookController@index')->name('admin.book.list');
+    Route::get('books/pending', 'BookController@pending')->name('admin.book.pending');
     Route::get('books/create', 'BookController@create')->name('admin.book.create');
     Route::post('books/add', 'BookController@add')->name('admin.book.add');
     Route::get('books/modify/{slug}', 'BookController@modify')->name('admin.book.modify');
     Route::post('books/update/{slug}', 'BookController@update')->name('admin.book.update');
+    Route::get('books/delete/{id}', 'BookController@delete')->name('admin.book.delete');
+    Route::get('books/switch/{id}', 'BookController@switch')->name('admin.book.switch');
 
     //categories
     Route::get('categories', 'CategoryController@index')->name('admin.categories');
@@ -80,7 +63,9 @@ Route::group([
     //publishers
     Route::get('publishers','PublisherController@index')->name('admin.publishers');
     Route::post('publishers/add','PublisherController@add')->name('admin.publishers.add');
-
+    Route::get('publishers/modify/{slug}', 'PublisherController@modify')->name('admin.publishers.modify');
+    Route::post('publishers/update/{slug}', 'PublisherController@update')->name('admin.publishers.update');
+    Route::get('publishers/delete/{slug}', 'PublisherController@delete')->name('admin.publishers.delete');
 
     //payment method
     Route::get('payment/methods', 'SettingsController@paymentMethodIndex')->name('admin.payment.method');
@@ -94,8 +79,13 @@ Route::group([
     'prefix' => 'publisher',
     'namespace' => 'Publisher'
 ], function () {
-    Route::get('dashboard', function (){
-       return "Publisher Dashboard";
-    });
+    Route::get('dashboard', 'DashboardController@index')->name('publisher.index');
+
+    //book related
+    Route::get('books/create', 'BookController@create')->name('publisher.book.create');
+    Route::post('books/add', 'BookController@add')->name('publisher.book.add');
+    Route::get('books/modify/{slug}', 'BookController@modify')->name('publisher.book.modify');
+    Route::post('books/update/{slug}', 'BookController@update')->name('publisher.book.update');
+    Route::get('books/delete/{id}', 'BookController@delete')->name('publisher.book.delete');
 });
 
